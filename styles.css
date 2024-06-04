@@ -1,0 +1,105 @@
+/* Estilos generales */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #3498db;
+    color: #fff;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos del encabezado */
+
+header {
+    background-color: #153545;
+    padding: 10px 0;
+}
+
+.logo {
+    float: left;
+    
+}
+
+.logo img {
+    width: 100px; 
+    height: auto;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav {
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.employee-area {
+    float: right;
+    margin-left: 30px;
+    padding: 10px 20px; /* Ajuste del padding */
+    background-color: rgb(255, 198, 9);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añadida una sombra */
+}
+
+.employee-area a {
+    color: #000; /* Color de texto */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px; /* Espaciado interno */
+}
+
+/* Estilos del contenido principal */
+
+.main-content {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.main-content h2 {
+    font-size: 36px;
+}
+
+.main-content p {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.main-content img {
+    max-width: 50%;
+    height: auto;
+    margin-top: 20px;
+}
+
+/* Estilos del pie de página */
+
+footer {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
