@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos para el formulario de contacto */
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form h2{
+            color:black;
+        }
+
+        form label{
+            color:black;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ajusta el tamaño del elemento incluyendo los bordes y el padding */
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Logo de la empresa">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="employee-area">
+                <a href="login.html">Área de Empleados</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <form>
+            <h2>Contáctanos</h2>
+            <label for="name">Nombre:</label><br>
+            <input type="text" id="name" name="name" required placeholder="Introduzca su nombre"><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required placeholder="Introduzca su correo electrónico"><br>
+
+            <label for="comment">Comentario:</label><br>
+            <textarea id="comment" name="comment" rows="4" required placeholder="Introduzca su comentario"></textarea><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Sergio Pérez Ríos [2024] Empresa de ejemplo</p>
+        </div>
+    </footer>
+</body>
+</html>
