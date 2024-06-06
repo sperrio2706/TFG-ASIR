@@ -38,4 +38,21 @@
             }
         }
 
+        # Función que comprueba si el usuario es jefe
+
+        function es_jefe($email){
+            $conexion = connectionDB();
+            $stmt = $conexion->prepare('SELECT * FROM Empleados WHERE Email=:email');
+			$stmt->bindParam(':email',$email);
+			$stmt->execute();
+			
+			$result = $stmt->fetch();
+	
+			if($result['Jefe'] == 'S'){
+	            return true;
+	        } else {
+	            return false;
+	        }
+        }
+
 ?>

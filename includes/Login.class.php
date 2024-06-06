@@ -26,8 +26,14 @@
                     $_SESSION['email'] = $this->email;
                     $_SESSION['valid'] = true;
 
-                    # Redirige a fichero privado
-                    header('Location: index.html');
+                    if (es_jefe($this->email)){
+                        header('Location: index-jefes.html');
+                    }else{
+                        # Redirige a fichero privado
+                        header('Location: index.html');
+                    }
+
+                    
                  } else {
                     # Acceso denegado (contraseña no coincide)
                     header('Location: https://bettercallsergio.es/index.html');
