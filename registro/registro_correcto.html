@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi empresa</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Estilos adicionales para el panel de administración */
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-panel {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .admin-panel h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: rgb(13, 47, 98);
+        }
+
+        .admin-panel button {
+            background-color: #2980b9;
+            color: #fff;
+            padding: 15px 30px;
+            /* Aumentar el tamaño del botón */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            /* Aumentar el tamaño del texto */
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+            /* Transiciones para efecto */
+        }
+
+        .admin-panel button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+            /* Aumentar ligeramente el tamaño al pasar el cursor */
+        }
+
+        .admin-panel img {
+            width: 50%; /* Ajusta la anchura al 50% */
+            height: auto;
+            margin: 0 auto 20px auto; /* Centra la imagen horizontalmente y añade espacio inferior */
+            display: block; /* Asegura que el margen auto funcione correctamente */
+        }
+        
+        
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-content h3{
+            color: #45a049;
+        }
+        
+
+        footer {
+            background-color: #2980b9;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Logo de la empresa">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="fichar.html">Fichar</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="employee-area">
+                <a href="profile.php">Perfil del empleado</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="admin-panel">
+            <h2>Resultados del registro</h2>
+            <h3>El registro se ha realizado correctamente</h3>
+        </div>
+    </section>
+
+
+
+
+    <footer>
+        <div class="container">
+            <p>Sergio Pérez Ríos [2024] Empresa de ejemplo</p>
+        </div>
+    </footer>
+</body>
+
+</html>
