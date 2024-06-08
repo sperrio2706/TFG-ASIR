@@ -127,7 +127,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($id_empleado != null) {
 
-            if (fichaje_posible($conexion, $id_empleado)){
+            // Insertamos la latitud y la longitud en la base de datos
+            insert_ubi($conexion, $id_empleado);
+
+            // Finalmente mostramos al usuario que el fichaje ha sido correcto
+            header("Location: fichaje_correcto.html");
+
+            /*if (fichaje_posible($conexion, $id_empleado)){
                 // Insertamos la latitud y la longitud en la base de datos
                 insert_ubi($conexion, $id_empleado);
 
@@ -136,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }else{
                 // Ya ha fichado dos veces
                 header('Location: https://bettercallsergio.es:8080/error_fichaje.html');
-            }
+            }*/
 
             
             exit; // Agrega una salida para asegurarse de que se detenga la ejecución después de la redirección

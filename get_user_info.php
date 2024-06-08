@@ -93,7 +93,7 @@
 
     <section class="main-content">
         <div class="container">
-            <h2>Lista de empleados </h2>
+            <h2>Perfil detallado</h2>
             <p>Página de empresa para TFG de ASIR</p>
         </div>
     </section>
@@ -117,10 +117,12 @@
                 function insertar_fila($ruta_foto, $nombre, $apellidos, $email, $jefe)
                 {
 
+                    // Transformamos la ruta absoluta a relativa
+                    $ruta_relativa  = str_replace("/var/www/html",".",$ruta_foto);
 
                     echo '<tr>';
                     echo '<td>';
-                    echo '<img src="' . $ruta_foto . '">';
+                    echo '<img src="' . $ruta_relativa . '">';
                     echo '</td>';
                     echo '<td>' . htmlspecialchars($nombre) . '</td>';
                     echo '<td>' . htmlspecialchars($apellidos) . '</td>';
@@ -132,42 +134,47 @@
                 function obtener_datos_empleado($conexion)
                 {
                     $sql = "
-        SELECT E.Nombre, E.Apellidos, E.Email, E.Jefe
-        FROM Empleados E
-        GROUP BY E.Id_Empleado, E.Nombre, E.Apellidos, E.Email, E.Jefe;
-    ";
+                    SELECT E.Id_Empleado, E.Nombre, E.Apellidos, E.Email, E.Jefe
+                    FROM Empleados E
+                    WHERE E.Email=:email
+                    GROUP BY E.Id_Empleado, E.Nombre, E.Apellidos, E.Email, E.Jefe;
+                    ";
 
                     $stmt = $conexion->prepare($sql);
+                    $stmt->bindParam(':email', $_POST['email']);
                     $stmt->execute();
                     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     return $resultado;
                 }
 
-                function formatear_nombre_usuario($nombre, $apellidos)
+
+                function obtenerRutaImagen($conexion, $id)
                 {
-                    // Convertir a minúsculas y eliminar espacios
-                    $nombre_usuario = strtolower($nombre . $apellidos);
+                    try {
+                        // Consulta la ruta de la imagen para el ID dado
+                        $sql = 'SELECT Ruta FROM Info_Facial WHERE Id_Empleado = :id';
+                        $stmt = $conexion->prepare($sql);
+                        $stmt->bindParam(':id', $id);
+                        $stmt->execute();
 
-                    // Reemplazar caracteres con tilde
-                    $caracteres_con_tilde = ['á', 'é', 'í', 'ó', 'ú', 'ñ'];
-                    $caracteres_sin_tilde = ['a', 'e', 'i', 'o', 'u', 'n'];
-                    $nombre_usuario = str_replace($caracteres_con_tilde, $caracteres_sin_tilde, $nombre_usuario);
+                        // Obtiene la ruta (si existe)
+                        $ruta = $stmt->fetchColumn();
 
-                    // Eliminar caracteres especiales y dejar solo letras y números
-                    $nombre_usuario = preg_replace('/[^a-z0-9]/', '', $nombre_usuario);
-
-                    return $nombre_usuario;
+                        // Devuelve la ruta
+                        return $ruta;
+                    } catch (PDOException $e) {
+                        // Manejo de errores
+                        echo "Error al consultar la ruta de la imagen: " . $e->getMessage();
+                        return null; // Devuelve null en caso de error
+                    }
                 }
 
                 $conexion = connectionDB();
                 $datos_empleado = obtener_datos_empleado($conexion);
 
-
-
-
                 foreach ($datos_empleado as $datos) {
                     // asignamos la ruta de la foto de perfil
-                    $ruta_foto = "./images/user-images/" . formatear_nombre_usuario($datos['Nombre'], $datos['Apellidos']) . '/perfil.jpg';
+                    $ruta_foto = obtenerRutaImagen($conexion, $datos["Id_Empleado"]);
                     insertar_fila($ruta_foto, $datos['Nombre'], $datos['Apellidos'], $datos['Email'], $datos['Jefe']);
                 }
                 ?>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>Face Authentication</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        #video {
+            border: 1px solid black;
+            width: 700px;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+        <h1>Face Authentication</h1>
+        <video id="video" autoplay></video>
+        <p id="status"></p>
+    </div>
+    <script>
+        // Get the video element
+        const video = document.getElementById('video');
+        const status = document.getElementById('status');
+
+        // Get access to the camera
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        // Capture an image every few seconds and send it to the server
+        setInterval(function () {
+            captureAndCompare();
+        }, 3000);
+
+        // Function to capture an image and send it to the Flask API
+        function captureAndCompare() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+
+            fetch('get_user_data.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        status.textContent = `Error: ${data.error}`;
+                    } else {
+                        // Asegúrate de que userImagePath esté definida aquí
+                        let userImagePath = data.user_image_path;
+
+                        // Eliminar las barras invertidas de la ruta de la imagen
+                        userImagePath = userImagePath.replace(/\\/g, '');
+
+                        userImagePath = userImagePath.replace('/var/www/html', '.');
+
+                        console.log(userImagePath);
+
+                        // Log the received JSON before parsing
+                        console.log('Received JSON:', data);
+
+                        fetch('https://bettercallsergio.es:5000/compare', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                user_image_path: userImagePath,
+                                temp_image_data: imageData
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('API Response:', data);
+                                if (data.result === 'success') {
+                                    if (data.match) {
+                                        status.textContent = 'Authentication successful! Redirecting...';
+                                        // Esperar 3 segundos antes de redirigir
+                                        setTimeout(function () {
+                                            window.location.href = '../index-jefes.html';
+                                        }, 3000); // 3000 milisegundos = 3 segundos
+                                    } else {
+                                        status.textContent = 'Authentication failed. Please try again.';
+                                    }
+                                } else {
+                                    status.textContent = `Error: ${data.message}`;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                status.textContent = 'Error connecting to the server. Please try again.';
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    status.textContent = 'Error connecting to the server. Please try again.';
+                });
+        }
+    </script>
+</body>
+
+</html>

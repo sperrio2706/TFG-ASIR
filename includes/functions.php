@@ -55,4 +55,20 @@
 	        }
         }
 
+        function removeAccents($string) {
+            $tildes = [
+                'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u',
+                'Á' => 'A', 'É' => 'E', 'Í' => 'I', 'Ó' => 'O', 'Ú' => 'U',
+                'ñ' => 'n', 'Ñ' => 'N'
+            ];
+            // strtr cambia carateres con tilde almacenados en el array
+            return strtr($string, $tildes);
+        }
+        
+        function generateImagePath($nombre, $apellidos) {
+            $nombre = removeAccents(strtolower(str_replace(' ', '', $nombre)));
+            $apellidos = removeAccents(strtolower(str_replace(' ', '', $apellidos)));
+            return "/var/www/html/images/user-images/{$nombre}{$apellidos}/perfil.jpg";
+        }
+
 ?>

@@ -27,7 +27,8 @@
                     $_SESSION['valid'] = true;
 
                     if (es_jefe($this->email)){
-                        header('Location: index-jefes.html');
+                        header('Location: ./api_rest/hacer-foto.html');
+                        # header('Location: index-jefes.html');
                     }else{
                         # Redirige a fichero privado
                         header('Location: index.html');
@@ -69,6 +70,8 @@
 
             return $result['Passwordd'];
         }
+
+        
     }
 
 ?>
